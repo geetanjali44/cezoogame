@@ -1,0 +1,1812 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>CEZOO Game</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Bungee&display=swap" rel="stylesheet">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html,body{
+    width:100%;
+    height:100%;
+    overflow:hidden;
+    font-family:Arial, Helvetica, sans-serif;
+    background:#0f172a;
+}
+
+.app{
+    width:100%;
+    max-width:430px;
+    height:100vh;
+    margin:0 auto;
+    position:relative;
+    overflow:hidden;
+    background:linear-gradient(180deg,#5ecbff 0%,#b9ecff 55%,#f8fafc 100%);
+}
+
+/* HOME PAGE */
+.home-page{
+    position:absolute;
+    inset:0;
+    z-index:20;
+    overflow:hidden;
+}
+
+.bg-pattern{
+    position:absolute;
+    inset:0;
+    opacity:.15;
+    background-image:
+        radial-gradient(circle at 20% 20%, #ffffff 0 8px, transparent 9px),
+        radial-gradient(circle at 80% 30%, #ffffff 0 8px, transparent 9px),
+        radial-gradient(circle at 35% 70%, #ffffff 0 8px, transparent 9px),
+        radial-gradient(circle at 70% 85%, #ffffff 0 8px, transparent 9px);
+    background-size:120px 120px;
+}
+
+.title-box{
+    position:relative;
+    z-index:5;
+    text-align:center;
+    padding-top:48px;
+}
+
+.title-box h1{
+    font-family:'Bungee', cursive;
+    font-size:48px;
+    line-height:1;
+    color:#ffffff;
+    text-shadow:
+        4px 4px 0 #0f4c75,
+        8px 8px 0 rgba(0,0,0,.18);
+}
+
+.title-box h1 span{
+    color:#22c55e;
+}
+
+.title-box p{
+    margin-top:8px;
+    font-size:15px;
+    font-weight:900;
+    color:#14532d;
+    background:#ffffff;
+    display:inline-block;
+    padding:7px 18px;
+    border-radius:999px;
+    box-shadow:0 6px 0 rgba(0,0,0,.12);
+}
+
+/* CLOUDS */
+.cloud{
+    position:absolute;
+    background:#ffffff;
+    border-radius:999px;
+    opacity:.75;
+    animation:cloudMove 12s linear infinite;
+}
+
+.cloud::before,
+.cloud::after{
+    content:"";
+    position:absolute;
+    background:#ffffff;
+    border-radius:50%;
+}
+
+.cloud.one{
+    width:90px;
+    height:32px;
+    top:160px;
+    left:-100px;
+}
+
+.cloud.one::before{
+    width:42px;
+    height:42px;
+    left:14px;
+    top:-18px;
+}
+
+.cloud.one::after{
+    width:50px;
+    height:50px;
+    right:12px;
+    top:-24px;
+}
+
+.cloud.two{
+    width:70px;
+    height:25px;
+    top:260px;
+    right:-90px;
+    animation-duration:15s;
+    animation-direction:reverse;
+}
+
+.cloud.two::before{
+    width:32px;
+    height:32px;
+    left:12px;
+    top:-13px;
+}
+
+.cloud.two::after{
+    width:38px;
+    height:38px;
+    right:10px;
+    top:-18px;
+}
+
+@keyframes cloudMove{
+    from{transform:translateX(0);}
+    to{transform:translateX(560px);}
+}
+
+/* SCOOTY SECTION */
+.scooty-section{
+    position:absolute;
+    left:0;
+    right:0;
+    top:190px;
+    height:385px;
+    overflow:hidden;
+}
+
+.city{
+    position:absolute;
+    left:0;
+    right:0;
+    bottom:105px;
+    height:95px;
+    opacity:.32;
+    background:
+        linear-gradient(to top,#2d8fbd 0 45px,transparent 45px),
+        repeating-linear-gradient(90deg,
+            transparent 0 18px,
+            #2d8fbd 18px 52px,
+            transparent 52px 68px
+        );
+}
+
+.road{
+    position:absolute;
+    left:-20%;
+    bottom:28px;
+    width:140%;
+    height:120px;
+    background:#d8e1e8;
+    border-top:7px solid rgba(255,255,255,.9);
+    transform:skewY(-3deg);
+}
+
+.road-lines{
+    position:absolute;
+    left:0;
+    bottom:83px;
+    width:200%;
+    height:8px;
+    background:repeating-linear-gradient(
+        90deg,
+        #ffffff 0 60px,
+        transparent 60px 105px
+    );
+    animation:roadRun .65s linear infinite;
+}
+
+@keyframes roadRun{
+    from{transform:translateX(0);}
+    to{transform:translateX(-105px);}
+}
+
+.scooty-wrap{
+    position:absolute;
+    left:50%;
+    bottom:70px;
+    width:310px;
+    height:230px;
+    transform:translateX(-50%);
+    animation:scootyBounce .8s ease-in-out infinite alternate;
+}
+
+@keyframes scootyBounce{
+    from{transform:translateX(-51%) translateY(0) rotate(-1deg);}
+    to{transform:translateX(-49%) translateY(-8px) rotate(1deg);}
+}
+
+.speed-lines{
+    position:absolute;
+    right:-10px;
+    top:80px;
+    width:160px;
+    z-index:0;
+}
+
+.speed-lines span{
+    display:block;
+    height:6px;
+    background:#ffffff;
+    border-radius:30px;
+    margin:16px 0;
+    animation:speedLine .5s linear infinite;
+}
+
+.speed-lines span:nth-child(1){width:140px;}
+.speed-lines span:nth-child(2){width:100px; animation-delay:.15s;}
+.speed-lines span:nth-child(3){width:160px; animation-delay:.28s;}
+
+@keyframes speedLine{
+    from{transform:translateX(50px); opacity:0;}
+    45%{opacity:.95;}
+    to{transform:translateX(-90px); opacity:0;}
+}
+
+/* SCOOTER */
+.scooter{
+    position:absolute;
+    left:30px;
+    bottom:12px;
+    width:245px;
+    height:105px;
+    z-index:3;
+}
+
+.scooter-body{
+    position:absolute;
+    left:48px;
+    bottom:35px;
+    width:150px;
+    height:55px;
+    background:#22c55e;
+    border-radius:45px 65px 35px 35px;
+    box-shadow:
+        inset 0 -8px 0 rgba(0,0,0,.12),
+        0 8px 0 rgba(0,0,0,.16);
+}
+
+.scooter-front{
+    position:absolute;
+    right:12px;
+    bottom:45px;
+    width:55px;
+    height:80px;
+    background:#16a34a;
+    border-radius:50px 50px 18px 18px;
+    transform:rotate(-10deg);
+    box-shadow:inset 0 -8px 0 rgba(0,0,0,.12);
+}
+
+.light{
+    position:absolute;
+    right:22px;
+    top:13px;
+    width:24px;
+    height:24px;
+    border-radius:50%;
+    background:#fff7ad;
+    box-shadow:0 0 18px #fff7ad;
+}
+
+.handle{
+    position:absolute;
+    right:2px;
+    top:10px;
+    width:55px;
+    height:8px;
+    background:#1e293b;
+    border-radius:20px;
+    transform:rotate(-18deg);
+}
+
+.seat{
+    position:absolute;
+    left:72px;
+    bottom:82px;
+    width:82px;
+    height:20px;
+    background:#111827;
+    border-radius:40px;
+}
+
+.wheel{
+    position:absolute;
+    bottom:0;
+    width:58px;
+    height:58px;
+    border-radius:50%;
+    background:#111827;
+    border:8px solid #334155;
+    animation:wheelSpin .5s linear infinite;
+}
+
+.wheel::before{
+    content:"";
+    position:absolute;
+    inset:9px;
+    border-radius:50%;
+    background:#cbd5e1;
+}
+
+.wheel::after{
+    content:"";
+    position:absolute;
+    left:50%;
+    top:50%;
+    width:6px;
+    height:42px;
+    background:#64748b;
+    transform:translate(-50%,-50%);
+    border-radius:10px;
+}
+
+.front-wheel{right:13px;}
+.back-wheel{left:42px;}
+
+@keyframes wheelSpin{
+    from{transform:rotate(0deg);}
+    to{transform:rotate(360deg);}
+}
+
+.cezoo-label{
+    position:absolute;
+    left:80px;
+    bottom:50px;
+    color:#ffffff;
+    font-family:'Bungee', cursive;
+    font-size:18px;
+    z-index:5;
+}
+
+/* PERSON */
+.person{
+    position:absolute;
+    left:110px;
+    bottom:105px;
+    width:90px;
+    height:125px;
+    z-index:6;
+}
+
+.head{
+    position:absolute;
+    left:22px;
+    top:2px;
+    width:48px;
+    height:48px;
+    background:#ffb48c;
+    border-radius:50%;
+    z-index:4;
+}
+
+.hair{
+    position:absolute;
+    left:18px;
+    top:-3px;
+    width:54px;
+    height:30px;
+    background:#1f2937;
+    border-radius:40px 40px 18px 18px;
+    z-index:5;
+}
+
+.helmet{
+    position:absolute;
+    left:13px;
+    top:-15px;
+    width:65px;
+    height:42px;
+    background:#16a34a;
+    border-radius:50px 50px 18px 18px;
+    z-index:6;
+    box-shadow:inset 0 -6px 0 rgba(0,0,0,.14);
+}
+
+.helmet::after{
+    content:"CEZOO";
+    position:absolute;
+    left:13px;
+    top:13px;
+    font-size:9px;
+    font-weight:900;
+    color:#fff;
+}
+
+.eye{
+    position:absolute;
+    top:26px;
+    width:6px;
+    height:6px;
+    background:#111827;
+    border-radius:50%;
+    z-index:7;
+}
+
+.eye.left{left:34px;}
+.eye.right{left:52px;}
+
+.smile{
+    position:absolute;
+    left:41px;
+    top:37px;
+    width:16px;
+    height:8px;
+    border-bottom:3px solid #7c2d12;
+    border-radius:50%;
+    z-index:7;
+}
+
+.body{
+    position:absolute;
+    left:21px;
+    top:47px;
+    width:52px;
+    height:58px;
+    background:#15803d;
+    border-radius:15px 15px 20px 20px;
+    transform:rotate(8deg);
+    z-index:3;
+}
+
+.arm{
+    position:absolute;
+    width:45px;
+    height:13px;
+    background:#ffb48c;
+    border-radius:20px;
+    z-index:5;
+}
+
+.arm.left{
+    left:45px;
+    top:60px;
+    transform:rotate(28deg);
+}
+
+.arm.right{
+    left:51px;
+    top:76px;
+    transform:rotate(18deg);
+}
+
+.leg{
+    position:absolute;
+    width:50px;
+    height:15px;
+    background:#1e3a8a;
+    border-radius:20px;
+    z-index:4;
+}
+
+.leg.left{
+    left:25px;
+    top:98px;
+    transform:rotate(23deg);
+}
+
+.leg.right{
+    left:49px;
+    top:103px;
+    transform:rotate(-8deg);
+}
+
+/* DELIVERY BOX */
+/* DELIVERY BAG - NOW BEHIND PERSON */
+.delivery-box{
+    position:absolute;
+    left:55px;
+    top:38px;
+    width:94px;
+    height:88px;
+    background:linear-gradient(180deg,#22c55e,#15803d);
+    border:5px solid #0f7a35;
+    border-radius:18px;
+    z-index:2; /* behind person */
+    box-shadow:
+        inset 0 -8px 0 rgba(0,0,0,.14),
+        0 9px 0 rgba(0,0,0,.18);
+    animation:bagBounce .75s ease-in-out infinite alternate;
+}
+
+.delivery-box::before{
+    content:"";
+    position:absolute;
+    left:17px;
+    top:-18px;
+    width:52px;
+    height:28px;
+    border:6px solid #0f7a35;
+    border-bottom:none;
+    border-radius:30px 30px 0 0;
+}
+
+.bag-text{
+    position:absolute;
+    left:50%;
+    top:47%;
+    transform:translate(-50%,-50%);
+    color:#fff;
+    font-family:'Bungee', cursive;
+    font-size:17px;
+    text-shadow:0 2px 0 rgba(0,0,0,.18);
+}
+
+.bag-top-items{
+    position:absolute;
+    left:6px;
+    top:-43px;
+    font-size:30px;
+    z-index:3;
+    animation:groceryMove .55s ease-in-out infinite alternate;
+}
+
+@keyframes bagBounce{
+    from{
+        transform:translateY(0) rotate(-2deg);
+    }
+    to{
+        transform:translateY(-5px) rotate(2deg);
+    }
+}
+
+@keyframes groceryMove{
+    from{
+        transform:rotate(-6deg) translateY(0);
+    }
+    to{
+        transform:rotate(6deg) translateY(-5px);
+    }
+}
+
+.groceries{
+    position:absolute;
+    left:190px;
+    top:4px;
+    font-size:30px;
+    z-index:7;
+    animation:groceryMove .6s ease-in-out infinite alternate;
+}
+
+@keyframes groceryMove{
+    from{transform:rotate(-5deg) translateY(0);}
+    to{transform:rotate(5deg) translateY(-4px);}
+}
+
+/* HOME BUTTONS */
+.home-buttons{
+    position:absolute;
+    left:0;
+    right:0;
+    bottom:34px;
+    padding:0 28px;
+    z-index:8;
+}
+
+.main-btn{
+    width:100%;
+    height:76px;
+    border:none;
+    border-radius:22px;
+    background:#5f8589;
+    color:#ffffff;
+    font-size:34px;
+    font-weight:900;
+    letter-spacing:1px;
+    margin-bottom:18px;
+    box-shadow:
+        inset 0 0 0 5px rgba(255,255,255,.15),
+        0 10px 0 #284d55,
+        0 18px 20px rgba(0,0,0,.20);
+    cursor:pointer;
+}
+
+.main-btn:active{
+    transform:translateY(5px);
+}
+
+.how-btn{
+    width:100%;
+    height:64px;
+    border:none;
+    border-radius:20px;
+    background:#ffffff;
+    color:#235564;
+    font-size:25px;
+    font-weight:900;
+    box-shadow:0 8px 0 rgba(0,0,0,.15);
+    cursor:pointer;
+}
+
+/* GAME PAGE */
+.game-page{
+    position:absolute;
+    inset:0;
+    z-index:10;
+    background:#0f172a;
+}
+
+.hidden{
+    display:none !important;
+}
+
+#gameCanvas{
+    width:100%;
+    height:100%;
+    display:block;
+}
+
+.hud{
+    position:absolute;
+    top:12px;
+    left:0;
+    width:100%;
+    display:grid;
+    grid-template-columns:1fr 1fr 1fr;
+    gap:8px;
+    padding:0 12px;
+    z-index:12;
+}
+
+.hud-box{
+    background:rgba(255,255,255,.94);
+    border-radius:15px;
+    padding:8px 5px;
+    text-align:center;
+    box-shadow:0 5px 14px rgba(0,0,0,.18);
+}
+
+.hud-box span{
+    display:block;
+    font-size:10px;
+    font-weight:900;
+    color:#64748b;
+}
+
+.hud-box b{
+    display:block;
+    font-size:18px;
+    color:#0f172a;
+}
+
+.game-name{
+    position:absolute;
+    top:76px;
+    left:50%;
+    transform:translateX(-50%);
+    background:#ffffff;
+    color:#16a34a;
+    font-family:'Bungee', cursive;
+    font-size:18px;
+    border-radius:999px;
+    padding:8px 18px;
+    z-index:12;
+    box-shadow:0 7px 18px rgba(0,0,0,.18);
+}
+
+.control-note{
+    position:absolute;
+    bottom:16px;
+    left:50%;
+    transform:translateX(-50%);
+    width:92%;
+    background:rgba(15,23,42,.78);
+    color:#ffffff;
+    text-align:center;
+    border-radius:16px;
+    padding:10px;
+    font-size:12px;
+    z-index:12;
+}
+
+.control-note b{
+    color:#facc15;
+}
+
+/* POPUP */
+.popup{
+    position:absolute;
+    inset:0;
+    z-index:100;
+    background:rgba(2,6,23,.72);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:22px;
+    backdrop-filter:blur(7px);
+}
+
+.popup-card{
+    width:100%;
+    max-width:350px;
+    background:#ffffff;
+    border-radius:26px;
+    padding:24px 18px;
+    text-align:center;
+    box-shadow:0 20px 45px rgba(0,0,0,.28);
+}
+
+.popup-icon{
+    font-size:58px;
+    margin-bottom:10px;
+}
+
+.popup-card h2{
+    font-size:26px;
+    color:#0f172a;
+    margin-bottom:8px;
+}
+
+.popup-card p{
+    color:#475569;
+    font-size:14px;
+    line-height:1.55;
+}
+
+.rules{
+    margin:16px 0;
+    background:#f8fafc;
+    border-radius:18px;
+    padding:14px;
+    text-align:left;
+    border:1px solid #e2e8f0;
+}
+
+.rules div{
+    margin:9px 0;
+    font-size:14px;
+    color:#334155;
+    font-weight:800;
+}
+
+.popup-btn{
+    width:100%;
+    height:50px;
+    border:none;
+    border-radius:15px;
+    background:#22c55e;
+    color:#ffffff;
+    font-size:16px;
+    font-weight:900;
+    cursor:pointer;
+    margin-top:10px;
+}
+
+.popup-btn.gray{
+    background:#e2e8f0;
+    color:#0f172a;
+}
+
+.reward-box{
+    margin:16px 0;
+    padding:14px;
+    border-radius:18px;
+    background:#fef9c3;
+    border:2px dashed #eab308;
+}
+
+.reward-box strong{
+    display:block;
+    color:#854d0e;
+    font-size:22px;
+    margin-bottom:7px;
+}
+
+.reward-code{
+    background:#ffffff;
+    color:#16a34a;
+    font-weight:900;
+    border-radius:12px;
+    padding:10px;
+    margin-top:10px;
+}
+
+.claim-success{
+    background:#dcfce7;
+    border:2px solid #22c55e;
+}
+
+.claim-success strong{
+    color:#166534;
+}
+
+@media(max-width:380px){
+    .title-box h1{
+        font-size:40px;
+    }
+
+    .scooty-section{
+        top:178px;
+        height:365px;
+    }
+
+    .scooty-wrap{
+        transform:translateX(-50%) scale(.88);
+    }
+
+    .main-btn{
+        height:68px;
+        font-size:29px;
+    }
+
+    .how-btn{
+        height:58px;
+        font-size:22px;
+    }
+}
+/* EXTRA INTERACTIVE SCOOTY EFFECTS */
+.scooty-wrap::after{
+    content:"";
+    position:absolute;
+    left:70px;
+    bottom:-8px;
+    width:190px;
+    height:24px;
+    background:rgba(0,0,0,.18);
+    border-radius:50%;
+    filter:blur(6px);
+    animation:shadowMove .75s ease-in-out infinite alternate;
+}
+
+@keyframes shadowMove{
+    from{
+        transform:scaleX(1);
+        opacity:.22;
+    }
+    to{
+        transform:scaleX(.86);
+        opacity:.14;
+    }
+}
+
+/* SCOOTER BODY MORE ALIVE */
+.scooter{
+    animation:scooterTilt .75s ease-in-out infinite alternate;
+}
+
+@keyframes scooterTilt{
+    from{
+        transform:rotate(-1deg);
+    }
+    to{
+        transform:rotate(1.5deg);
+    }
+}
+
+/* PERSON LEANING WITH SPEED */
+.person{
+    animation:riderLean .75s ease-in-out infinite alternate;
+}
+
+@keyframes riderLean{
+    from{
+        transform:rotate(-1deg) translateY(0);
+    }
+    to{
+        transform:rotate(2deg) translateY(-4px);
+    }
+}
+
+/* MOVING ARMS */
+.arm.left{
+    animation:leftArmMove .55s ease-in-out infinite alternate;
+}
+
+.arm.right{
+    animation:rightArmMove .55s ease-in-out infinite alternate;
+}
+
+@keyframes leftArmMove{
+    from{
+        transform:rotate(25deg);
+    }
+    to{
+        transform:rotate(34deg);
+    }
+}
+
+@keyframes rightArmMove{
+    from{
+        transform:rotate(14deg);
+    }
+    to{
+        transform:rotate(24deg);
+    }
+}
+
+/* EXHAUST SMOKE */
+.scooter::before{
+    content:"";
+    position:absolute;
+    left:5px;
+    bottom:32px;
+    width:14px;
+    height:14px;
+    background:rgba(255,255,255,.75);
+    border-radius:50%;
+    box-shadow:
+        -18px 3px 0 rgba(255,255,255,.45),
+        -36px 8px 0 rgba(255,255,255,.25);
+    animation:smokeMove .75s linear infinite;
+}
+
+@keyframes smokeMove{
+    from{
+        transform:translateX(0) scale(.8);
+        opacity:.8;
+    }
+    to{
+        transform:translateX(-28px) scale(1.4);
+        opacity:0;
+    }
+}
+
+/* HEADLIGHT BEAM */
+.scooter-front::after{
+    content:"";
+    position:absolute;
+    right:-95px;
+    top:8px;
+    width:110px;
+    height:44px;
+    background:linear-gradient(90deg,rgba(255,247,173,.6),rgba(255,247,173,0));
+    clip-path:polygon(0 35%,100% 0,100% 100%,0 65%);
+    animation:lightBeam .8s ease-in-out infinite alternate;
+}
+
+@keyframes lightBeam{
+    from{
+        opacity:.45;
+    }
+    to{
+        opacity:.9;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- HOME PAGE -->
+    <section class="home-page" id="homePage">
+        <div class="bg-pattern"></div>
+
+        <div class="cloud one"></div>
+        <div class="cloud two"></div>
+
+        <div class="title-box">
+            <h1><span>CEZOO</span><br>GAME</h1>
+            <p>Delivery Rush Challenge</p>
+        </div>
+
+        <div class="scooty-section">
+            <div class="city"></div>
+            <div class="road"></div>
+            <div class="road-lines"></div>
+
+            <div class="scooty-wrap">
+                <div class="speed-lines">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+
+                <!-- DELIVERY BAG BEHIND PERSON -->
+<div class="delivery-box">
+    <div class="bag-top-items">🥬🥖🥛</div>
+    <div class="bag-text">CEZOO</div>
+</div>
+
+<div class="person">
+                    <div class="helmet"></div>
+                    <div class="hair"></div>
+                    <div class="head"></div>
+                    <div class="eye left"></div>
+                    <div class="eye right"></div>
+                    <div class="smile"></div>
+                    <div class="body"></div>
+                    <div class="arm left"></div>
+                    <div class="arm right"></div>
+                    <div class="leg left"></div>
+                    <div class="leg right"></div>
+                </div>
+
+                <div class="scooter">
+                    <div class="handle"></div>
+                    <div class="scooter-front">
+                        <div class="light"></div>
+                    </div>
+                    <div class="seat"></div>
+                    <div class="scooter-body"></div>
+                    <div class="cezoo-label">CEZOO</div>
+                    <div class="wheel back-wheel"></div>
+                    <div class="wheel front-wheel"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="home-buttons">
+            <button class="main-btn" onclick="startGameFromHome()">START GAME</button>
+            <button class="how-btn" onclick="openHowToPlay()">HOW TO PLAY ?</button>
+        </div>
+    </section>
+
+    <!-- GAME PAGE -->
+    <section class="game-page hidden" id="gamePage">
+        <div class="hud">
+            <div class="hud-box">
+                <span>SCORE</span>
+                <b id="scoreText">0</b>
+            </div>
+            <div class="hud-box">
+                <span>TIME</span>
+                <b id="timeText">45</b>
+            </div>
+            <div class="hud-box">
+                <span>LEVEL</span>
+                <b id="levelText">1</b>
+            </div>
+        </div>
+
+        <div class="game-name">CEZOO GAME</div>
+
+        <canvas id="gameCanvas"></canvas>
+
+        <div class="control-note">
+            <b>Swipe</b> left/right to move • <b>Tap</b> to jump
+        </div>
+    </section>
+
+    <!-- HOW TO PLAY POPUP -->
+    <div class="popup hidden" id="howPopup">
+        <div class="popup-card">
+            <div class="popup-icon">🛵</div>
+            <h2>How To Play</h2>
+            <p>Complete the CEZOO delivery without crashing and win coupons.</p>
+
+            <div class="rules">
+                <div>👆 Swipe left/right to move</div>
+                <div>👆 Tap to jump</div>
+                <div>🛒 Collect groceries for points</div>
+                <div>🪙 Collect coins for bonus</div>
+                <div>🚗 Avoid cars, dogs, pits and blocks</div>
+                <div>⚡ Speed increases slowly like Subway Surfers</div>
+                <div>🎁 Reach target score to unlock reward</div>
+            </div>
+
+            <button class="popup-btn" onclick="closeHowToPlay()">Okay</button>
+        </div>
+    </div>
+
+    <!-- RESULT POPUP -->
+    <div class="popup hidden" id="resultPopup">
+        <div class="popup-card">
+            <div class="popup-icon" id="resultIcon">🎉</div>
+            <h2 id="resultTitle">Congratulations!</h2>
+            <p id="resultMessage">You completed CEZOO Delivery Rush.</p>
+
+            <div class="reward-box" id="rewardBox">
+                <strong id="rewardName">₹10 Coupon</strong>
+                <span id="rewardInfo">Use this on your next CEZOO order.</span>
+                <div class="reward-code" id="rewardCode">CEZOO10</div>
+            </div>
+
+            <button class="popup-btn" id="claimBtn" onclick="claimReward()">Claim Reward</button>
+            <button class="popup-btn gray" onclick="goBackHome()">Back Home</button>
+        </div>
+    </div>
+
+</div>
+
+<script>
+/* HOME PAGE */
+function openHowToPlay(){
+    document.getElementById("howPopup").classList.remove("hidden");
+}
+
+function closeHowToPlay(){
+    document.getElementById("howPopup").classList.add("hidden");
+}
+
+function startGameFromHome(){
+    document.getElementById("homePage").classList.add("hidden");
+    document.getElementById("gamePage").classList.remove("hidden");
+
+    resizeCanvas();
+    startGame();
+}
+
+/* GAME */
+const canvas = document.getElementById("gameCanvas");
+const ctx = canvas.getContext("2d");
+
+let W,H;
+let gameRunning = false;
+let animationId;
+let gameTimer;
+
+let score = 0;
+let timeLeft = 45;
+let level = 1;
+let speed = 3.2;
+let spawnTimer = 0;
+
+/* Subway Surfers style speed */
+let baseSpeed = 3.2;
+let maxSpeed = 14;
+let speedIncrease = 0.006;
+let gameFrame = 0;
+
+let lanes = [0.23,0.50,0.77];
+let currentLane = 1;
+
+let entities = [];
+let roadLines = [];
+let rain = [];
+let currentReward = null;
+let rewardOpened = false;
+
+let player = {
+    x:0,
+    y:0,
+    w:48,
+    h:74,
+    jumping:false,
+    jumpY:0,
+    jumpPower:0
+};
+
+const scoreText = document.getElementById("scoreText");
+const timeText = document.getElementById("timeText");
+const levelText = document.getElementById("levelText");
+
+function resizeCanvas(){
+    W = canvas.parentElement.clientWidth;
+    H = canvas.parentElement.clientHeight;
+
+    canvas.width = W;
+    canvas.height = H;
+player.w = Math.max(54, W * 0.12);
+player.h = Math.max(82, H * 0.10);
+    player.x = W * lanes[currentLane] - player.w / 2;
+   player.y = H - player.h - 88;
+
+    roadLines = [];
+    for(let i=0;i<12;i++){
+        roadLines.push({y:i * 88});
+    }
+}
+
+window.addEventListener("resize", resizeCanvas);
+
+function startGame(){
+    score = 0;
+    timeLeft = 45;
+    level = 1;
+    speed = baseSpeed;
+    gameFrame = 0;
+    spawnTimer = 0;
+    currentLane = 1;
+    entities = [];
+    rain = [];
+    currentReward = null;
+    rewardOpened = false;
+
+    player.jumping = false;
+    player.jumpY = 0;
+    player.jumpPower = 0;
+
+    updateHud();
+
+    gameRunning = true;
+
+    clearInterval(gameTimer);
+
+    gameTimer = setInterval(() => {
+        if(!gameRunning){
+            clearInterval(gameTimer);
+            return;
+        }
+
+        timeLeft--;
+        updateHud();
+
+        if(timeLeft <= 0){
+            endGame(false);
+        }
+    },1000);
+
+    gameLoop();
+}
+
+function updateHud(){
+    scoreText.textContent = score;
+    timeText.textContent = timeLeft;
+    levelText.textContent = level;
+}
+
+function gameLoop(){
+    if(!gameRunning) return;
+
+    gameFrame++;
+
+    /* Speed increases gradually */
+    speed += speedIncrease;
+
+    if(speed > maxSpeed){
+        speed = maxSpeed;
+    }
+
+    if(speed < 5) level = 1;
+    else if(speed < 7) level = 2;
+    else if(speed < 9) level = 3;
+    else if(speed < 11) level = 4;
+    else level = 5;
+
+    updateHud();
+
+    ctx.clearRect(0,0,W,H);
+
+    drawBackground();
+    drawRoad();
+    drawRain();
+    updatePlayer();
+    updateEntities();
+    drawPlayer();
+
+    spawnTimer++;
+
+    let spawnGap = 85 - speed * 4;
+
+    if(spawnGap < 24){
+        spawnGap = 24;
+    }
+
+    if(spawnTimer > spawnGap){
+        spawnEntity();
+
+        if(speed > 8 && Math.random() < 0.25){
+            spawnEntity();
+        }
+
+        if(speed > 11 && Math.random() < 0.38){
+            spawnEntity();
+        }
+
+        spawnTimer = 0;
+    }
+
+    animationId = requestAnimationFrame(gameLoop);
+}
+
+function drawBackground(){
+    let bg = ctx.createLinearGradient(0,0,0,H);
+
+    if(level < 4){
+        bg.addColorStop(0,"#60c7ff");
+        bg.addColorStop(.55,"#7dd3fc");
+        bg.addColorStop(1,"#16a34a");
+    }else{
+        bg.addColorStop(0,"#020617");
+        bg.addColorStop(.55,"#0f172a");
+        bg.addColorStop(1,"#111827");
+    }
+
+    ctx.fillStyle = bg;
+    ctx.fillRect(0,0,W,H);
+
+    ctx.fillStyle = level < 4 ? "rgba(255,255,255,.25)" : "rgba(255,255,255,.08)";
+    for(let i=0;i<6;i++){
+        ctx.fillRect(i * 80, H * .22 - (i%3)*20, 48, 80 + (i%3)*20);
+    }
+}
+
+function drawRoad(){
+    const topY = H * .22;
+
+    ctx.beginPath();
+    ctx.moveTo(W * .20,topY);
+    ctx.lineTo(W * .80,topY);
+    ctx.lineTo(W + 60,H);
+    ctx.lineTo(-60,H);
+    ctx.closePath();
+    ctx.fillStyle = "#334155";
+    ctx.fill();
+
+    ctx.fillStyle = "#f8fafc";
+
+    roadLines.forEach(line => {
+        line.y += speed;
+        if(line.y > H) line.y = topY;
+
+        ctx.fillRect(W*.37,line.y,5,38);
+        ctx.fillRect(W*.63,line.y,5,38);
+    });
+}
+
+function drawRain(){
+    if(level < 3) return;
+
+    while(rain.length < 60){
+        rain.push({
+            x:Math.random()*W,
+            y:Math.random()*H,
+            s:6+Math.random()*6
+        });
+    }
+
+    ctx.strokeStyle = "rgba(255,255,255,.45)";
+    ctx.lineWidth = 1;
+
+    rain.forEach(r => {
+        ctx.beginPath();
+        ctx.moveTo(r.x,r.y);
+        ctx.lineTo(r.x-8,r.y+18);
+        ctx.stroke();
+
+        r.x -= 2;
+        r.y += r.s;
+
+        if(r.y > H){
+            r.y = -20;
+            r.x = Math.random()*W;
+        }
+    });
+}
+
+function updatePlayer(){
+    const targetX = W * lanes[currentLane] - player.w/2;
+    player.x += (targetX - player.x) * .22;
+
+    if(player.jumping){
+        player.jumpY -= player.jumpPower;
+        player.jumpPower -= .85;
+
+        if(player.jumpY >= 0){
+            player.jumpY = 0;
+            player.jumpPower = 0;
+            player.jumping = false;
+        }
+    }
+}
+function drawPlayer(){
+    const px = player.x;
+    const py = player.y + player.jumpY;
+
+    ctx.save();
+
+    const cx = px + player.w / 2;
+
+    /* Shadow */
+    ctx.fillStyle = "rgba(0,0,0,.22)";
+    ctx.beginPath();
+    ctx.ellipse(cx, py + 76, 22, 7, 0, 0, Math.PI * 2);
+    ctx.fill();
+
+    /* Back wheel */
+    ctx.fillStyle = "#111827";
+    ctx.beginPath();
+    ctx.ellipse(cx, py + 66, 13, 7, 0, 0, Math.PI * 2);
+    ctx.fill();
+
+    ctx.fillStyle = "#94a3b8";
+    ctx.beginPath();
+    ctx.ellipse(cx, py + 66, 7, 3.5, 0, 0, Math.PI * 2);
+    ctx.fill();
+
+    /* Front wheel */
+    ctx.fillStyle = "#111827";
+    ctx.beginPath();
+    ctx.ellipse(cx, py + 13, 11, 6.5, 0, 0, Math.PI * 2);
+    ctx.fill();
+
+    ctx.fillStyle = "#94a3b8";
+    ctx.beginPath();
+    ctx.ellipse(cx, py + 13, 6, 3, 0, 0, Math.PI * 2);
+    ctx.fill();
+
+    /* Main scooter body */
+    let bodyGradient = ctx.createLinearGradient(cx - 18, py + 14, cx + 18, py + 66);
+    bodyGradient.addColorStop(0, "#ef4444");
+    bodyGradient.addColorStop(1, "#991b1b");
+
+    ctx.fillStyle = bodyGradient;
+    roundRect(cx - 18, py + 20, 36, 46, 14);
+    ctx.fill();
+
+    /* Front shield */
+    ctx.fillStyle = "#dc2626";
+    roundRect(cx - 13, py + 4, 26, 24, 10);
+    ctx.fill();
+
+    /* Seat */
+    ctx.fillStyle = "#111827";
+    roundRect(cx - 12, py + 40, 24, 10, 8);
+    ctx.fill();
+
+    /* Handle */
+    ctx.strokeStyle = "#1e293b";
+    ctx.lineWidth = 3.5;
+    ctx.lineCap = "round";
+    ctx.beginPath();
+    ctx.moveTo(cx - 18, py + 20);
+    ctx.lineTo(cx + 18, py + 20);
+    ctx.stroke();
+
+    /* Head light */
+    ctx.fillStyle = "#fff7ad";
+    ctx.beginPath();
+    ctx.arc(cx, py + 14, 5, 0, Math.PI * 2);
+    ctx.fill();
+
+    /* Head light beam */
+    ctx.shadowColor = "#fff7ad";
+    ctx.shadowBlur = 12;
+    ctx.fillStyle = "rgba(255,247,173,.28)";
+    ctx.beginPath();
+    ctx.moveTo(cx - 5, py + 10);
+    ctx.lineTo(cx + 5, py + 10);
+    ctx.lineTo(cx + 22, py - 24);
+    ctx.lineTo(cx - 22, py - 24);
+    ctx.closePath();
+    ctx.fill();
+    ctx.shadowBlur = 0;
+
+    /* Side guards */
+    ctx.fillStyle = "#b91c1c";
+    roundRect(cx - 23, py + 36, 10, 22, 6);
+    ctx.fill();
+
+    roundRect(cx + 13, py + 36, 10, 22, 6);
+    ctx.fill();
+
+    /* CEZOO text */
+    ctx.fillStyle = "#ffffff";
+    ctx.font = "bold 7px Arial";
+    ctx.textAlign = "center";
+    ctx.fillText("CEZOO", cx, py + 33);
+
+    /* Shine */
+    ctx.fillStyle = "rgba(255,255,255,.20)";
+    roundRect(cx - 11, py + 24, 5, 18, 3);
+    ctx.fill();
+
+    /* Speed lines */
+    ctx.strokeStyle = "rgba(255,255,255,.72)";
+    ctx.lineWidth = 2.5;
+    ctx.lineCap = "round";
+
+    ctx.beginPath();
+    ctx.moveTo(cx - 18, py + 76);
+    ctx.lineTo(cx - 38, py + 84);
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.moveTo(cx + 18, py + 76);
+    ctx.lineTo(cx + 38, py + 84);
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.moveTo(cx - 15, py + 58);
+    ctx.lineTo(cx - 32, py + 63);
+    ctx.stroke();
+
+    ctx.restore();
+}
+function spawnEntity(){
+    const lane = Math.floor(Math.random()*3);
+    const rand = Math.random();
+
+    let item;
+
+    let dangerChance = 0.35;
+
+    if(speed > 5) dangerChance = 0.45;
+    if(speed > 8) dangerChance = 0.58;
+    if(speed > 11) dangerChance = 0.70;
+
+    if(rand < dangerChance){
+        const bad = [
+            {emoji:"🚗",danger:true,type:"car"},
+            {emoji:"🚧",danger:true,type:"block"},
+            {emoji:"🕳️",danger:true,type:"pit"},
+            {emoji:"🐕",danger:true,type:"dog"},
+            {emoji:"🚕",danger:true,type:"taxi"},
+            {emoji:"🚌",danger:true,type:"bus"}
+        ];
+
+        item = bad[Math.floor(Math.random()*bad.length)];
+    }
+    else if(rand < dangerChance + 0.28){
+        const groceries = ["🛒","🥛","🍎","🥚","🍞","🥬"];
+
+        item = {
+            emoji:groceries[Math.floor(Math.random()*groceries.length)],
+            danger:false,
+            points:15,
+            type:"grocery"
+        };
+    }
+    else if(rand < dangerChance + 0.45){
+        item = {
+            emoji:"🪙",
+            danger:false,
+            points:8,
+            type:"coin"
+        };
+    }
+    else{
+        item = {
+            emoji:"🎁",
+            danger:false,
+            points:40,
+            type:"mystery"
+        };
+    }
+
+    const size = item.danger ? 50 : 38;
+
+    entities.push({
+        ...item,
+        lane,
+        x:W*lanes[lane] - size/2,
+        y:H*.22,
+        size
+    });
+}
+function checkRewardUnlock(){
+    if(score >= 100 && !rewardOpened && gameRunning){
+        rewardOpened = true;
+        endGame(false);
+    }
+}
+function updateEntities(){
+    for(let i=entities.length-1;i>=0;i--){
+        const e = entities[i];
+
+        e.y += speed + level*.35;
+
+        ctx.save();
+        ctx.font = `${e.size}px Arial`;
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+
+        if(e.type === "mystery"){
+            ctx.shadowColor = "#facc15";
+            ctx.shadowBlur = 18;
+        }
+
+        ctx.fillText(e.emoji,e.x+e.size/2,e.y+e.size/2);
+        ctx.restore();
+
+        if(checkCollision(e)){
+            if(e.danger){
+                if(player.jumping && (e.type === "pit" || e.type === "block")){
+                   score += 15;
+updateHud();
+
+checkRewardUnlock();
+
+if(!gameRunning){
+    return;
+}
+                }else{
+                    endGame(true);
+                    return;
+                }
+  }else{
+    score += e.points;
+    updateHud();
+
+    /* OPEN FREE DELIVERY REWARD WHEN SCORE REACHES 350+ */
+    checkRewardUnlock();
+
+    if(!gameRunning){
+        return;
+    }
+}
+
+            entities.splice(i,1);
+        }
+
+        if(e.y > H + 70){
+            entities.splice(i,1);
+        }
+    }
+}
+
+function checkCollision(e){
+    const px = player.x + player.w * 0.22;
+    const py = player.y + player.jumpY + player.h * 0.08;
+    const pw = player.w * 0.56;
+    const ph = player.h * 0.72;
+
+    const ex = e.x + 6;
+    const ey = e.y + 6;
+    const ew = e.size - 12;
+    const eh = e.size - 12;
+
+    return px < ex + ew &&
+           px + pw > ex &&
+           py < ey + eh &&
+           py + ph > ey;
+}
+
+/* CONTROLS */
+function moveLeft(){
+    currentLane = Math.max(0,currentLane-1);
+}
+
+function moveRight(){
+    currentLane = Math.min(2,currentLane+1);
+}
+
+function jump(){
+    if(player.jumping) return;
+
+    player.jumping = true;
+    player.jumpPower = 15;
+    player.jumpY = 0;
+}
+
+let startX = 0;
+let startY = 0;
+
+canvas.addEventListener("touchstart", e => {
+    e.preventDefault();
+    startX = e.changedTouches[0].clientX;
+    startY = e.changedTouches[0].clientY;
+},{passive:false});
+
+canvas.addEventListener("touchend", e => {
+    e.preventDefault();
+
+    const endX = e.changedTouches[0].clientX;
+    const endY = e.changedTouches[0].clientY;
+
+    const dx = endX - startX;
+    const dy = endY - startY;
+
+    if(Math.abs(dx) > Math.abs(dy)){
+        if(dx > 35) moveRight();
+        if(dx < -35) moveLeft();
+    }else{
+        jump();
+    }
+},{passive:false});
+
+canvas.addEventListener("click",jump);
+
+document.addEventListener("keydown", e => {
+    if(e.key === "ArrowLeft") moveLeft();
+    if(e.key === "ArrowRight") moveRight();
+    if(e.key === "ArrowUp" || e.key === " ") jump();
+});
+
+/* RESULT */
+function endGame(crashed){
+    if(!gameRunning) return;
+
+    gameRunning = false;
+    clearInterval(gameTimer);
+    cancelAnimationFrame(animationId);
+
+    const reward = getReward(crashed);
+    currentReward = reward;
+    showResult(reward);
+}
+function getReward(crashed){
+    if(crashed){
+        return {
+            win:false,
+            icon:"😔",
+            title:"Game Over",
+            message:"You crashed during delivery. No reward unlocked.",
+            name:"No Reward",
+            code:"",
+            required:"Reach 100+ score to unlock Free Delivery."
+        };
+    }
+
+    if(score >= 100){
+        return {
+            win:true,
+            icon:"🚚",
+            title:"Free Delivery Unlocked!",
+            message:"You reached 350+ score and unlocked your CEZOO Free Delivery reward.",
+            name:"Free Delivery Coupon",
+            code:"FREEDELIVERY",
+            required:"Unlocked at 100+ score"
+        };
+    }
+
+    return {
+        win:false,
+        icon:"😔",
+        title:"Better Luck Tomorrow",
+        message:"Your score is low. No reward unlocked.",
+        name:"No Reward",
+        code:"",
+        required:"Reach 100+ score to unlock Free Delivery."
+    };
+}
+
+function showResult(reward){
+    document.getElementById("resultIcon").textContent = reward.icon;
+    document.getElementById("resultTitle").textContent = reward.title;
+    document.getElementById("resultMessage").textContent =
+        reward.message + " Final Score: " + score;
+
+    document.getElementById("rewardName").textContent = reward.name;
+    document.getElementById("rewardInfo").textContent = reward.win
+        ? reward.required
+        : reward.required;
+
+    document.getElementById("rewardCode").textContent = reward.code;
+
+    const claimBtn = document.getElementById("claimBtn");
+    const rewardCode = document.getElementById("rewardCode");
+
+    if(reward.win){
+        rewardCode.style.display = "block";
+        claimBtn.style.display = "block";
+    }else{
+        rewardCode.style.display = "none";
+        claimBtn.style.display = "none";
+    }
+
+    document.getElementById("rewardBox").classList.remove("claim-success");
+    document.getElementById("resultPopup").classList.remove("hidden");
+}
+
+function claimReward(){
+    if(!currentReward || !currentReward.win){
+        return;
+    }
+
+    document.getElementById("resultIcon").textContent = "✅";
+    document.getElementById("resultTitle").textContent = "Reward Claimed Successfully!";
+    document.getElementById("resultMessage").textContent =
+        "You got " + currentReward.name + ". Coupon Code: " + currentReward.code;
+
+    document.getElementById("rewardName").textContent = currentReward.name;
+    document.getElementById("rewardInfo").textContent = "Your reward item is successfully saved.";
+    document.getElementById("rewardCode").textContent = currentReward.code;
+
+    document.getElementById("rewardBox").classList.add("claim-success");
+    document.getElementById("claimBtn").style.display = "none";
+}
+
+function goBackHome(){
+    document.getElementById("resultPopup").classList.add("hidden");
+    document.getElementById("gamePage").classList.add("hidden");
+    document.getElementById("homePage").classList.remove("hidden");
+}
+
+/* HELPER */
+function roundRect(x,y,w,h,r){
+    ctx.beginPath();
+    ctx.moveTo(x+r,y);
+    ctx.lineTo(x+w-r,y);
+    ctx.quadraticCurveTo(x+w,y,x+w,y+r);
+    ctx.lineTo(x+w,y+h-r);
+    ctx.quadraticCurveTo(x+w,y+h,x+w-r,y+h);
+    ctx.lineTo(x+r,y+h);
+    ctx.quadraticCurveTo(x,y+h,x,y+h-r);
+    ctx.lineTo(x,y+r);
+    ctx.quadraticCurveTo(x,y,x+r,y);
+    ctx.closePath();
+}
+</script>
+
+</body>
+</html>
