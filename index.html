@@ -500,55 +500,10 @@ html,body{
     transform:rotate(-8deg);
 }
 
-/* DELIVERY BOX */
-/* DELIVERY BAG - NOW BEHIND PERSON */
-.delivery-box{
-    position:absolute;
-    left:55px;
-    top:38px;
-    width:94px;
-    height:88px;
-    background:linear-gradient(180deg,#22c55e,#15803d);
-    border:5px solid #0f7a35;
-    border-radius:18px;
-    z-index:2; /* behind person */
-    box-shadow:
-        inset 0 -8px 0 rgba(0,0,0,.14),
-        0 9px 0 rgba(0,0,0,.18);
-    animation:bagBounce .75s ease-in-out infinite alternate;
-}
 
-.delivery-box::before{
-    content:"";
-    position:absolute;
-    left:17px;
-    top:-18px;
-    width:52px;
-    height:28px;
-    border:6px solid #0f7a35;
-    border-bottom:none;
-    border-radius:30px 30px 0 0;
-}
 
-.bag-text{
-    position:absolute;
-    left:50%;
-    top:47%;
-    transform:translate(-50%,-50%);
-    color:#fff;
-    font-family:'Bungee', cursive;
-    font-size:17px;
-    text-shadow:0 2px 0 rgba(0,0,0,.18);
-}
 
-.bag-top-items{
-    position:absolute;
-    left:6px;
-    top:-43px;
-    font-size:30px;
-    z-index:3;
-    animation:groceryMove .55s ease-in-out infinite alternate;
-}
+
 
 @keyframes bagBounce{
     from{
@@ -1042,6 +997,54 @@ html,body{
         opacity:.9;
     }
 }
+.home-game-img{
+    position:absolute;
+    left:50%;
+    top:50%;
+    width:250px;
+    height:auto;
+    transform:translate(-50%,-50%);
+    z-index:5;
+    object-fit:contain;
+    filter:drop-shadow(0 14px 18px rgba(0,0,0,.22));
+}
+
+/* remove running/bounce effect for picture */
+.scooty-wrap{
+    animation:none;
+}
+
+/* hide speed lines if you want normal picture */
+.speed-lines{
+    display:none;
+}
+
+@media(max-width:380px){
+    .home-game-img{
+        width:220px;
+    }
+}
+.image-icon{
+    width:100%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    margin-bottom:8px;
+}
+
+.image-icon img{
+    width:115px;
+    height:115px;
+    object-fit:contain;
+    filter:drop-shadow(0 8px 12px rgba(0,0,0,.20));
+}
+
+@media(max-width:380px){
+    .image-icon img{
+        width:90px;
+        height:90px;
+    }
+}
 </style>
 </head>
 
@@ -1073,37 +1076,9 @@ html,body{
                     <span></span>
                 </div>
 
-                <!-- DELIVERY BAG BEHIND PERSON -->
-<div class="delivery-box">
-    <div class="bag-top-items">🥬🥖🥛</div>
-    <div class="bag-text">CEZOO</div>
-</div>
 
-<div class="person">
-                    <div class="helmet"></div>
-                    <div class="hair"></div>
-                    <div class="head"></div>
-                    <div class="eye left"></div>
-                    <div class="eye right"></div>
-                    <div class="smile"></div>
-                    <div class="body"></div>
-                    <div class="arm left"></div>
-                    <div class="arm right"></div>
-                    <div class="leg left"></div>
-                    <div class="leg right"></div>
-                </div>
 
-                <div class="scooter">
-                    <div class="handle"></div>
-                    <div class="scooter-front">
-                        <div class="light"></div>
-                    </div>
-                    <div class="seat"></div>
-                    <div class="scooter-body"></div>
-                    <div class="cezoo-label">CEZOO</div>
-                    <div class="wheel back-wheel"></div>
-                    <div class="wheel front-wheel"></div>
-                </div>
+              <img src="images/bike.webp" class="home-game-img" alt="CEZOO Game">  
             </div>
         </div>
 
@@ -1141,8 +1116,9 @@ html,body{
 
     <!-- HOW TO PLAY POPUP -->
     <div class="popup hidden" id="howPopup">
-        <div class="popup-card">
-            <div class="popup-icon">🛵</div>
+        <div class="popup-icon image-icon">
+    <img src="images/bike.webp" alt="CEZOO Scooty Game">
+</div>
             <h2>How To Play</h2>
             <p>Complete the CEZOO delivery without crashing and win coupons.</p>
 
@@ -1201,6 +1177,8 @@ function startGameFromHome(){
 /* GAME */
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
+const playerImg = new Image();
+playerImg.src = "images/bike2.webp";
 
 let W,H;
 let gameRunning = false;
@@ -1248,10 +1226,10 @@ function resizeCanvas(){
 
     canvas.width = W;
     canvas.height = H;
-player.w = Math.max(54, W * 0.12);
-player.h = Math.max(82, H * 0.10);
-    player.x = W * lanes[currentLane] - player.w / 2;
-   player.y = H - player.h - 88;
+player.w = Math.max(48, W * 0.13);
+player.h = Math.max(70, H * 0.095);
+player.x = W * lanes[currentLane] - player.w / 2;
+player.y = H - player.h - 92;
 
     roadLines = [];
     for(let i=0;i<12;i++){
@@ -1454,124 +1432,24 @@ function updatePlayer(){
 function drawPlayer(){
     const px = player.x;
     const py = player.y + player.jumpY;
+    const cx = px + player.w / 2;
 
     ctx.save();
 
-    const cx = px + player.w / 2;
-
-    /* Shadow */
-    ctx.fillStyle = "rgba(0,0,0,.22)";
+    /* Shadow below scooty */
+    ctx.fillStyle = "rgba(0,0,0,.24)";
     ctx.beginPath();
-    ctx.ellipse(cx, py + 76, 22, 7, 0, 0, Math.PI * 2);
+    ctx.ellipse(cx, py + player.h - 4, player.w * .38, 7, 0, 0, Math.PI * 2);
     ctx.fill();
 
-    /* Back wheel */
-    ctx.fillStyle = "#111827";
-    ctx.beginPath();
-    ctx.ellipse(cx, py + 66, 13, 7, 0, 0, Math.PI * 2);
-    ctx.fill();
-
-    ctx.fillStyle = "#94a3b8";
-    ctx.beginPath();
-    ctx.ellipse(cx, py + 66, 7, 3.5, 0, 0, Math.PI * 2);
-    ctx.fill();
-
-    /* Front wheel */
-    ctx.fillStyle = "#111827";
-    ctx.beginPath();
-    ctx.ellipse(cx, py + 13, 11, 6.5, 0, 0, Math.PI * 2);
-    ctx.fill();
-
-    ctx.fillStyle = "#94a3b8";
-    ctx.beginPath();
-    ctx.ellipse(cx, py + 13, 6, 3, 0, 0, Math.PI * 2);
-    ctx.fill();
-
-    /* Main scooter body */
-    let bodyGradient = ctx.createLinearGradient(cx - 18, py + 14, cx + 18, py + 66);
-    bodyGradient.addColorStop(0, "#ef4444");
-    bodyGradient.addColorStop(1, "#991b1b");
-
-    ctx.fillStyle = bodyGradient;
-    roundRect(cx - 18, py + 20, 36, 46, 14);
-    ctx.fill();
-
-    /* Front shield */
-    ctx.fillStyle = "#dc2626";
-    roundRect(cx - 13, py + 4, 26, 24, 10);
-    ctx.fill();
-
-    /* Seat */
-    ctx.fillStyle = "#111827";
-    roundRect(cx - 12, py + 40, 24, 10, 8);
-    ctx.fill();
-
-    /* Handle */
-    ctx.strokeStyle = "#1e293b";
-    ctx.lineWidth = 3.5;
-    ctx.lineCap = "round";
-    ctx.beginPath();
-    ctx.moveTo(cx - 18, py + 20);
-    ctx.lineTo(cx + 18, py + 20);
-    ctx.stroke();
-
-    /* Head light */
-    ctx.fillStyle = "#fff7ad";
-    ctx.beginPath();
-    ctx.arc(cx, py + 14, 5, 0, Math.PI * 2);
-    ctx.fill();
-
-    /* Head light beam */
-    ctx.shadowColor = "#fff7ad";
-    ctx.shadowBlur = 12;
-    ctx.fillStyle = "rgba(255,247,173,.28)";
-    ctx.beginPath();
-    ctx.moveTo(cx - 5, py + 10);
-    ctx.lineTo(cx + 5, py + 10);
-    ctx.lineTo(cx + 22, py - 24);
-    ctx.lineTo(cx - 22, py - 24);
-    ctx.closePath();
-    ctx.fill();
-    ctx.shadowBlur = 0;
-
-    /* Side guards */
-    ctx.fillStyle = "#b91c1c";
-    roundRect(cx - 23, py + 36, 10, 22, 6);
-    ctx.fill();
-
-    roundRect(cx + 13, py + 36, 10, 22, 6);
-    ctx.fill();
-
-    /* CEZOO text */
-    ctx.fillStyle = "#ffffff";
-    ctx.font = "bold 7px Arial";
-    ctx.textAlign = "center";
-    ctx.fillText("CEZOO", cx, py + 33);
-
-    /* Shine */
-    ctx.fillStyle = "rgba(255,255,255,.20)";
-    roundRect(cx - 11, py + 24, 5, 18, 3);
-    ctx.fill();
-
-    /* Speed lines */
-    ctx.strokeStyle = "rgba(255,255,255,.72)";
-    ctx.lineWidth = 2.5;
-    ctx.lineCap = "round";
-
-    ctx.beginPath();
-    ctx.moveTo(cx - 18, py + 76);
-    ctx.lineTo(cx - 38, py + 84);
-    ctx.stroke();
-
-    ctx.beginPath();
-    ctx.moveTo(cx + 18, py + 76);
-    ctx.lineTo(cx + 38, py + 84);
-    ctx.stroke();
-
-    ctx.beginPath();
-    ctx.moveTo(cx - 15, py + 58);
-    ctx.lineTo(cx - 32, py + 63);
-    ctx.stroke();
+    /* Your own scooty image */
+    if(playerImg.complete){
+        ctx.drawImage(playerImg, px, py, player.w, player.h);
+    }else{
+        ctx.fillStyle = "#ef4444";
+        roundRect(px, py, player.w, player.h, 14);
+        ctx.fill();
+    }
 
     ctx.restore();
 }
@@ -1680,7 +1558,7 @@ if(!gameRunning){
     score += e.points;
     updateHud();
 
-    /* OPEN FREE DELIVERY REWARD WHEN SCORE REACHES 350+ */
+    /* OPEN FREE DELIVERY REWARD WHEN SCORE REACHES 100+ */
     checkRewardUnlock();
 
     if(!gameRunning){
@@ -1795,7 +1673,7 @@ function getReward(crashed){
             win:true,
             icon:"🚚",
             title:"Free Delivery Unlocked!",
-            message:"You reached 350+ score and unlocked your CEZOO Free Delivery reward.",
+            message:"You reached 100+ score and unlocked your CEZOO Free Delivery reward.",
             name:"Free Delivery Coupon",
             code:"FREEDELIVERY",
             required:"Unlocked at 100+ score"
